@@ -1,0 +1,24 @@
+[package]
+name = "rkernel"
+version = "0.1.0"
+edition = "2021"
+
+
+[unstable]
+build-std-features = ["compiler-builtins-mem"]
+build-std = ["core", "compiler_builtins"]
+
+# the profile used for `cargo build`
+[profile.dev]
+panic = "abort" # disable stack unwinding on panic
+
+# the profile used for `cargo build --release`
+[profile.release]
+panic = "abort" # disable stack unwinding on panic
+
+[target.'cfg(target_os = "none")']
+runner = "bootimage runner"
+
+[dependencies]
+bootloader = "0.9.8"
+volatile = "0.2.6"
